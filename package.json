@@ -1,0 +1,16 @@
+{
+  "name": "um-dia-na-vida-de-um-motoboy",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Experiência educativa coletiva de entregas, com salas em tempo real e resultados verdadeiros dos jogadores.",
+  "engines": { "node": ">=22.13.0" },
+  "scripts": { "start": "node server.js", "dev": "node --watch server.js", "test": "node --test tests/*.test.js" },
+  "dependencies": {
+    "express": "^4.21.2",
+    "socket.io": "^4.8.1",
+    "pg": "^8.13.3",
+    "redis": "^4.7.0",
+    "@socket.io/redis-adapter": "^8.3.0"
+  }
+}

@@ -1,0 +1,32 @@
+services:
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      DATABASE_URL: postgresql://motoboy:senha-local-trocar@postgres:5432/motoboy
+      REDIS_URL: redis://redis:6379
+      MAX_PLAYERS: 1000
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    restart: unless-stopped
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: motoboy
+      POSTGRES_USER: motoboy
+      POSTGRES_PASSWORD: senha-local-trocar
+    volumes:
+      - motoboy-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U motoboy -d motoboy"]
+      interval: 5s
+      retries: 10
+  redis:
+    image: redis:7-alpine
+volumes:
+  motoboy-db:
