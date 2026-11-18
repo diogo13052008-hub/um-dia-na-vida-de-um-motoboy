@@ -37,27 +37,34 @@ Variáveis:
 | `PG_SSL` | `true` para conexão TLS com PostgreSQL |
 | `PG_SSL_INSECURE` | `true` somente se necessário em ambiente confiável de teste |
 
-## Dinâmica e cálculos
+## Dinâmica revisada e cálculos (v2.1)
 
-As oito corridas são as definidas na conversa anterior. O jogo utiliza os mesmos **endereços, distâncias e preços** e atribui durações narrativas estimadas. Os preços não são garantias de pagamento atual do iFood. Em junho de 2026 houve reajuste divulgado pela plataforma, portanto estes valores devem ser tratados como **dados da simulação**, não como cotação atual.
+**Correção importante:** a versão anterior usava os pisos de pagamento do iFood como se fossem ofertas típicas, e distribuía oito entregas em dez horas. Isso não é representativo. O cenário revisado é explicitamente **hipotético**; valores de cada corrida não são extraídos de um banco de ofertas reais e não são apresentados como médias estatísticas.
 
-- Soma máxima de receitas aceitando as oito ofertas: **R$ 71,40**.
-- Distância máxima remunerada das oito corridas: **41,5 km**.
-- Combustível: **R$ 0,20/km**; desgaste: **R$ 0,10/km**.
-- Alimentação: **R$ 25,00**; outros custos: **R$ 5,00** (fixos por dia de expediente).
-- Exemplo com oito aceitas: R$ 8,30 combustível + R$ 4,15 manutenção + R$ 30,00 fixos = **R$ 42,45** de custos; líquido **R$ 28,95**.
-- O dia começa às **08:00** e a disponibilidade vai até **18:00**, ou até a conclusão da última entrega, se ultrapassar 18:00. Se o participante rejeitar a corrida, não recebe e não roda esses quilômetros, mas a espera entre ofertas permanece dentro do expediente. O relógio visual mostra o horário da oferta e, após aceitar, o término estimado dela.
-- Fórmula individual: `líquido = bruto − (km × 0,30 + 30,00)`; `líquido/hora = líquido ÷ horas totais de disponibilidade no dia`.
-- Participantes removidos pelo administrador permanecem registrados na base, mas são excluídos das médias. O administrador não pode avançar sem resposta de todos os participantes **ativos**; nenhuma recusa automática é fabricada.
-- Mapa **esquemático**, sem precisão geográfica de rotas. Deslocamentos entre o fim de uma entrega e a coleta seguinte não são contabilizados e poderiam reduzir ainda mais os ganhos em uma situação real.
-- Os resultados consolidados e gráficos são gerados apenas após a liberação do administrador, usando exclusivamente escolhas armazenadas no servidor.
+As oito distâncias e os endereços originais foram mantidos. Para o cenário com adicionais simulados, os pagamentos agora são R$ 12,00, R$ 15,00, R$ 17,00, R$ 14,00, R$ 19,00, R$ 23,00, R$ 28,00 e R$ 25,00. Os horários são 08:05, 08:30, 09:05, 09:45, 10:15, 11:00, 11:50 e 12:50; o recorte de disponibilidade vai de 08:00 a 13:38. Não é um expediente inteiro.
 
-**Salário mínimo nacional oficial por hora em 2026: R$ 7,37**, Decreto nº 12.797/2025. A comparação gráfica é didática: regime de vínculo e benefícios são distintos. Não é correto concluir que todos os motoboys ganham os valores simulados.
+| Corrida | km estimados | Recebimento simulado | Duração |
+| --- | ---: | ---: | ---: |
+| 1 | 2,2 | R$ 12,00 | 18 min |
+| 2 | 4,1 | R$ 15,00 | 28 min |
+| 3 | 4,8 | R$ 17,00 | 32 min |
+| 4 | 2,8 | R$ 14,00 | 22 min |
+| 5 | 5,3 | R$ 19,00 | 35 min |
+| 6 | 6,7 | R$ 23,00 | 42 min |
+| 7 | 8,4 | R$ 28,00 | 52 min |
+| 8 | 7,2 | R$ 25,00 | 48 min |
 
-Fontes:
-- https://entregador.ifood.com.br/ganhos/
-- https://entregador.ifood.com.br/sem-categoria/correcao-inflacionaria-2026/
-- https://legis.senado.gov.br/norma/41882097/publicacao/41888369
+Se o participante aceita as 8: **R$ 153,00** de faturamento bruto, **41,5 km** nas entregas, **R$ 42,45** de custos simulados (R$ 8,30 de combustível, R$ 4,15 de manutenção, R$ 25 de alimentação e R$ 5 de outros), **R$ 110,55** de ganho líquido estimado, **5h38** de disponibilidade, correspondendo a **R$ 19,62 líquidos/h** e **R$ 27,16 brutos/h**. Esses números são construção de um cenário educativo, **não a média real de quem trabalha no iFood**.
+
+A remuneração pode variar por rota, distância, região, horários, bonificações e outros fatores. Como referência comparativa:
+- [iFood — ganhos](https://entregador.ifood.com.br/ganhos/): piso de R$ 7,50 por rota de moto e R$ 1,50 por km total remunerável (2026); esses pisos **não** são médias por corrida.
+- [Folha 01/10/2026](https://www1.folha.uol.com.br/colunas/painelsa/2026/10/ifood-relanca-portal-com-dados-sobre-delivery-e-setor.shtml): segundo o iFood, média de **R$ 30,07 brutos/h**, baseada em dados do primeiro trimestre de 2026. É dado divulgado pela empresa, não garantia individual; o conceito de hora pode diferir da simulação.
+- [Cebrap/Amobitec — estudo divulgado em 2025](https://institucional.ifood.com.br/estudos-e-pesquisas/ganhos-autonomia-aplicativos/): faixa de **R$ 17–22 líquidos/h**, considerando cenários de tempo de espera e custos; dados de estudo anterior, não tabela de 2026.
+- [Decreto 12.797/2025](https://legis.senado.gov.br/norma/41882097/publicacao/41888369): salário mínimo equivalente a **R$ 7,37/h em 2026**, contexto diferente de vínculo e direitos trabalhistas.
+
+**O mapa não é uma rota conectada.** O jogo não mede nem cobra quilômetros vazios entre as diferentes regiões de São Paulo. Portanto, seus custos por quilômetro representam somente as entregas aceitas e podem estar subestimados. O cálculo de despesas é hipotético, conforme os parâmetros do exercício. Recusar uma oferta não gera receita nem quilômetros de entrega, mas o relógio avança até a próxima oferta.
+
+Os resultados individuais e coletivos continuam provenientes somente das decisões reais gravadas no servidor. Se já houver salas ou sessões antigas abertas, **crie uma sala nova após o deploy**, porque o conjunto de regras mudou; em hospedagem gratuita o banco local pode ser apagado entre reinícios.
 
 ## Segurança, privacidade e limitações
 
