@@ -3,3 +3,19 @@
 @media(max-width:920px){.hero{grid-template-columns:1fr 0.84fr}.hero-visual{min-height:340px}.hero-visual .big-back{font-size:145px}.game-layout{grid-template-columns:1fr}.game-right{grid-template-columns:1fr 1fr}.results-stats{grid-template-columns:repeat(3,1fr)}.result-charts{grid-template-columns:1fr}.leader{grid-template-columns:1fr}}
 @media(max-width:650px){.app-shell{padding:0 15px}.topbar{padding:14px 0}.header-pill{display:none}.main-content{padding-top:27px}.hero{grid-template-columns:1fr;gap:13px}.hero h1{letter-spacing:-2.1px}.hero-visual{display:none}.hero-note{margin-top:20px}.cta-grid{grid-template-columns:1fr;margin-top:28px}.cta-card .desc{min-height:0}.join-form{grid-template-columns:1fr}.room-code{font-size:27px;letter-spacing:4px}.panel{padding:18px;border-radius:17px}.game-top h1{font-size:39px;letter-spacing:-1.8px}.game-top{align-items:start}.game-right{grid-template-columns:1fr}.stats-grid{grid-template-columns:1fr 1fr}.stat .stat-value{font-size:22px}.trip-numbers b{font-size:17px}.trip-numbers>div{padding:12px 5px}.map-wrap svg{max-height:240px}.results-stats{grid-template-columns:repeat(2,1fr)}.reflection{padding:25px 19px}.graph-row{grid-template-columns:83px 1fr 77px;gap:7px}.graph-row .name,.graph-row .value{font-size:11px}.action-row .btn{flex:1}.top-right{gap:0}.decision-buttons{gap:8px}.decision-buttons .btn{padding:12px 7px;font-size:13px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* Convite por QR Code — a arte é gerada no próprio servidor, sem serviços externos. */
+.qr-share-preview{margin-top:22px;border:1px solid #3c6464;background:#0a2327;border-radius:17px;padding:18px 14px;text-align:center}
+.qr-caption{font-size:11px;letter-spacing:1.7px;font-weight:900;color:var(--orange);margin:0 0 14px}
+.qr-share-preview img,.qr-modal img{display:block;margin:0 auto;background:#fff;padding:10px;border-radius:15px;max-width:100%;height:auto;image-rendering:auto}
+.qr-share-preview img{width:218px;box-shadow:0 6px 22px #0005}
+.qr-share-preview .micro{margin:14px auto;max-width:280px}
+.qr-modal-backdrop{position:fixed;inset:0;background:#000d;backdrop-filter:blur(7px);z-index:150;display:flex;align-items:center;justify-content:center;padding:16px;overflow-y:auto}
+.qr-modal{background:linear-gradient(145deg,#18383e,#0a2025);border:1px solid #52716d;border-radius:24px;box-shadow:0 30px 80px #000b;width:min(96vw,650px);max-height:94vh;overflow:auto;padding:24px;text-align:center}
+.qr-modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;text-align:left;margin-bottom:8px}
+.qr-modal-head h2{margin:0;font-size:clamp(21px,3vw,31px)}
+.qr-modal>p{color:#c0d5d0;margin:8px auto 18px;font-size:14px;line-height:1.5}
+.qr-modal img{width:min(70vw,345px);border-radius:16px;border:5px solid white;box-shadow:0 10px 30px #0007}
+.qr-big-code{font-size:clamp(27px,5vw,43px);letter-spacing:8px;font-weight:900;color:var(--orange);margin:14px 0}
+.qr-modal .micro{max-width:580px;overflow-wrap:anywhere;margin:10px auto 14px}
+@media(max-width:650px){.qr-modal{padding:15px}.qr-modal-head{flex-direction:column;align-items:stretch}.qr-modal-head button{align-self:flex-end}.qr-modal img{width:min(72vw,290px)}.qr-big-code{letter-spacing:4px}}

@@ -3,6 +3,7 @@ import { createServer } from 'node:http';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { Server } from 'socket.io';
+import QRCode from 'qrcode';
 import { Storage, UserError } from './src/storage.js';
 import { TRIPS, RULES, computeMetrics, averageResults, MINIMUM_HOURLY_CENTS_2026 } from './src/game.js';
 
@@ -11,8 +12,30 @@ const store=new Storage();
 await store.init();
 const app=express();
 app.disable('x-powered-by');
+app.set('trust proxy',1);
 app.use((req,res,next)=>{res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('Referrer-Policy','strict-origin-when-cross-origin');next();});
 app.get('/health',(req,res)=>res.json({ok:true,app:'Motoboy',at:new Date().toISOString()}));
+// QR gerado no próprio servidor: a URL contém apenas o código público de entrada, nunca o token do administrador.
+app.get('/api/qr/:code.svg',async (req,res)=>{
+  const {code}=req.params;
+  if (!/^\d{6}$/.test(code)) return res.status(400).type('text/plain').send('Código inválido');
+  try {
+    const origin=process.env.PUBLIC_BASE_URL?.replace(/\/$/,'') || `${req.protocol}://${req.get('host')}`;
+    const invitation=new URL('/',origin);
+    invitation.searchParams.set('s',code);
+    invitation.searchParams.set('participar','1');
+    const svg=await QRCode.toString(invitation.toString(),{
+      type:'svg',width:360,margin:2,errorCorrectionLevel:'M',
+      color:{dark:'#0b292b',light:'#ffffff'}
+    });
+    res.set('Cache-Control','public, max-age=300');
+    res.type('image/svg+xml').send(svg);
+  } catch(error) {
+    console.error('Erro ao gerar QR Code:',error);
+    res.status(500).type('text/plain').send('Não foi possível gerar o QR Code.');
+  }
+});
+
 app.use(express.static(join(__dirname,'public'),{index:'index.html'}));
 app.get('*',(req,res)=>res.sendFile(join(__dirname,'public','index.html')));
 const httpServer=createServer(app);
